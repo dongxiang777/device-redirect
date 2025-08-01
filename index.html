@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script>
+    // 极速设备检测与跳转
+    (function() {
+      // 替换为您的实际链接
+      const MOBILE_LINK = "https://work.weixin.qq.com/ca/cawcdea4e29b2df185";
+      const DESKTOP_LINK = "https://store.weixin.qq.com/shop/b/jB9qerTt3hkf8Gz";
+      
+      // 移动设备检测（包含微信）
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|MicroMessenger/i.test(navigator.userAgent);
+      
+      // 立即跳转
+      location.href = isMobile ? MOBILE_LINK : DESKTOP_LINK;
+    })();
+  </script>
+</head>
+<body>
+  <!-- 完全空白页面 -->
+</body>
+</html>
