@@ -1,19 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <script>
-    // 设备检测与跳转（无延迟）
     (function() {
-      const isMobile = /Android|iPhone|iPad|Mobile|WeChat/i.test(navigator.userAgent);
+      // 1. 极速设备检测（包含微信）
+      const ua = navigator.userAgent;
+      const isWeChat = /MicroMessenger/i.test(ua);
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Mobi|mini/i.test(ua);
+      
+      // 2. 目标链接配置
       const MOBILE_LINK = "https://work.weixin.qq.com/ca/cawcdea4e29b2df185";
       const DESKTOP_LINK = "https://store.weixin.qq.com/shop/b/jB9qerTt3hkf8Gz";
       
-      // 直接跳转（无任何DOM操作）
-      location.href = isMobile ? MOBILE_LINK : DESKTOP_LINK;
+      // 3. 微信内特殊处理（无感跳转核心）
+      if (isWeChat) {
+        // 方案A：即时跳转（90%场景有效）
+        location.href = MOBILE_LINK;
+        
+        // 方案B：双重跳转保障（解决微信屏蔽问题）
+        setTimeout(() => {
+          // 创建隐藏iframe实现二次跳转
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = MOBILE_LINK;
+          document.body.appendChild(iframe);
+        }, 50);
+      } 
+      // 4. 非微信设备标准跳转
+      else {
+        location.href = isMobile ? MOBILE_LINK : DESKTOP_LINK;
+      }
     })();
   </script>
 </head>
 <body>
-  <!-- 空白页面 -->
+  <!-- 完全空白页面 -->
 </body>
 </html>
